@@ -1,10 +1,12 @@
 from datetime import timedelta, date
 
+from Models import now_date
+
 
 class FoodItem:
     """First class"""
 
-    def __init__(self, name: str, quantity: float, calories: float, buy_date: str, exp_date: str) -> object:
+    def __init__(self, name: str, quantity: float, calories: float, buy_date: str, exp_date: str):
         self.name = name
         self.quantity = quantity
         self.calories100g = calories
@@ -13,7 +15,7 @@ class FoodItem:
 
     @property
     def isExpired(self):
-        if (date.fromisoformat(self.exp_date) - date.fromisoformat(self.buy_date)).days < 0:
+        if (date.fromisoformat(self.exp_date) - now_date).days < 0:
             return True
         return False
 
@@ -25,7 +27,7 @@ class FoodItem:
     def optimalCaloriesEachDay(self):
         if not self.isExpired:
             return self.totalCalories / (
-                    (date.fromisoformat(self.exp_date) - date.fromisoformat(self.buy_date)).days + 1)
+                    (date.fromisoformat(self.exp_date) - now_date).days + 1)
         else:
             return 0
 
