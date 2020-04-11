@@ -18,11 +18,10 @@ class Verifier:
 
     @staticmethod
     def numberVerifier(elem):
-        if elem is None or not isinstance(elem,Number) or abs(elem) > 1e6:  # if strings are needed  |or (isstring(elem) and not str.isdecimal(elem))|
-            return False # Will become error message
+        if (isinstance(elem, int) or isinstance(elem, float)) and abs(elem) < 1e6:
+            return True  # Will become error message
         else:
-            return True
-
+            return False
     @staticmethod
     def dateVerifier(elem):
         if elem is not None and isstring(elem):
@@ -48,3 +47,8 @@ class Verifier:
                 and self.stringVerifier(place.location) \
                 and self.stringVerifier(place.contact):
             return True
+
+
+# print(type(elem))
+# print(isinstance(elem, int))
+# print(isinstance(elem, float))

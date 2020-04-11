@@ -1,7 +1,7 @@
 import sqlite3
 
 
-class DonationPlacesDB:
+class DonationPlaceDB:
 
     def __init__(self, dbname):
         self.conn = sqlite3.connect(dbname)
