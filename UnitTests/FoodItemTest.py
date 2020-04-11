@@ -2,7 +2,7 @@ import unittest
 from Models.FoodItem import FoodItem
 
 
-class TestFoodItem(unittest.TestCase):
+class FoodItemTest(unittest.TestCase):
 
     def setUp(self):
         self.goodFood = FoodItem ('goodFood', 500, 333, '2020-04-11', '2020-04-18')
@@ -25,8 +25,6 @@ class TestFoodItem(unittest.TestCase):
         # irrelevant though
         self.assertIsNone(print(self.goodFood))
 
-    def test_insdel(self):
-        self.goodFood
 
 
 if __name__ == '__main__':

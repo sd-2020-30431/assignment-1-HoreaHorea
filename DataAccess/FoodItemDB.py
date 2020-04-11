@@ -43,12 +43,13 @@ class FoodItemDB:
             self.c.execute("delete from Foods where\n"
                            "(exp_date = :exp_date)",
                            {'exp_date': exp_date})
+            return self.c.fetchall()
 
-    def updateFoodByDate(self, new_exp_date):
-        with self.conn:
-            self.c.execute("update Foods set buy_date\n"
-                           "(exp_date = :exp_date)",
-                           {'exp_date': exp_date})
+    # def updateFoodByDate(self, new_exp_date):
+    #     with self.conn:
+    #         self.c.execute("update Foods set buy_date\n"
+    #                        "(exp_date = :exp_date)",
+    #                        {'exp_date': exp_date})
 
     # print(getFoodsByName())
     # insFood(FoodItem('a',1,1,"2020-01-04","2020-01-04"))

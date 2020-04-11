@@ -1,15 +1,24 @@
 import unittest
 from Models.FoodItem import FoodItem
 from DataAccess.FoodItemDB import FoodItemDB
+from WorkLayer.Verifier import Verifier
 
 
-class TestFoodItem(unittest.TestCase):
+class FoodItemDBTest(unittest.TestCase):
 
     def setUp(self):
+        v = Verifier()
         self.db = FoodItemDB(":memory:")
-        self.db.insFood(FoodItem('goodFood', 500, 333, '2020-01-01', '2020-01-03'))
-        self.db.insFood(FoodItem('badFood', 500, 333, '2020-01-03', '2020-01-01'))
-        self.db.insFood(FoodItem('newFood', 500, 333, '2020-01-02', '2020-01-02'))
+        a = FoodItem('goodFood', 500, 333, '2020-01-01', '2020-01-03')
+        b = FoodItem('badFood', 500, 333, '2020-01-03', '2020-01-01')
+        c = FoodItem('newFood', 500, 333, '2020-01-02', '2020-01-02')
+
+        if v.FoodItemVerifier(a):
+            self.db.insFood(a)
+        if v.FoodItemVerifier(b):
+            self.db.insFood(b)
+        if v.FoodItemVerifier(c):
+            self.db.insFood(c)
 
     def tearDown(self):
         self.db.drop()

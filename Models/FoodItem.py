@@ -1,6 +1,6 @@
 from datetime import timedelta, date
 
-from Models import now_date
+from Models import Today
 
 
 class FoodItem:
@@ -15,7 +15,7 @@ class FoodItem:
 
     @property
     def isExpired(self):
-        if (date.fromisoformat(self.exp_date) - now_date).days < 0:
+        if (date.fromisoformat(self.exp_date) - Today.now_date.date()).days < 0:
             return True
         return False
 
@@ -27,7 +27,7 @@ class FoodItem:
     def optimalCaloriesEachDay(self):
         if not self.isExpired:
             return self.totalCalories / (
-                    (date.fromisoformat(self.exp_date) - now_date).days + 1)
+                    (date.fromisoformat(self.exp_date) - Today.now_date.date()).days + 1)
         else:
             return 0
 
@@ -37,5 +37,3 @@ class FoodItem:
             self.name, self.quantity, self.calories100g, self.buy_date, self.exp_date)
 
 
-ana = FoodItem('', 12, 133, '2000-01-02', '2000-01-01')
-print(ana.isExpired)
