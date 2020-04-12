@@ -45,12 +45,41 @@ class FoodItemDB:
                            {'exp_date': exp_date})
             return self.c.fetchall()
 
-    # def updateFoodByDate(self, new_exp_date):
-    #     with self.conn:
-    #         self.c.execute("update Foods set buy_date\n"
-    #                        "(exp_date = :exp_date)",
-    #                        {'exp_date': exp_date})
+    def updateFoodByExpDate(self, exp_date):
+        with self.conn:
+            self.c.execute("update Foods set calories = -calories where\n"
+                           "(exp_date = :exp_date)",
+                           {'exp_date': exp_date})
 
+    def getWeeklyReport(self, w1, w2):
+        res = []
+        with self.conn:
+            self.c.execute(
+                "select sum(quantity * calories) from Foods where (calories > 0 and (buy_date > :buy_date)and ("
+                "exp_date < :exp_date))"), {'buy_date': w1, 'exp_date': w2}
+            res.append(self.c.fetchone())
+            self.c.execute(
+                "select sum(quantity * calories) from Foods where (calories < 0 and (buy_date > :buy_date)and ("
+                "exp_date < :exp_date))"), {'buy_date': w1, 'exp_date': w2}
+            res.append(self.c.fetchone())
+            self.c.execute("select sum (quantity / 1000) from Foods where (calories = 0 and (buy_date > :buy_date)and ("
+                           "exp_date < :exp_date))"), {'buy_date': w1, 'exp_date': w2}
+            res.append(self.c.fetchone())
+            return res
+
+    def getMonthlyReport(self, month):
+        res = []
+        with self.conn:
+            self.c.execute("select sum(quantity * calories) from Foods where (calories > 0 and (buy_date like '%-' + "
+                           "':month' + '-%') and (exp_date like '%-' + ':month' + '-%'))"), {'month': month}
+            res.append(self.c.fetchone())
+            self.c.execute("select sum(quantity * calories) from Foods where (calories > 0 and (buy_date like '%-' + "
+                           "':month' + '-%') and (exp_date like '%-' + ':month' + '-%'))"), {'month': month}
+            res.append(self.c.fetchone())
+            self.c.execute("select sum(quantity * calories) from Foods where (calories > 0 and (buy_date like '%-' + "
+                           "':month' + '-%') and (exp_date like '%-' + ':month' + '-%'))"), {'month': month}
+            res.append(self.c.fetchone())
+            return res
     # print(getFoodsByName())
     # insFood(FoodItem('a',1,1,"2020-01-04","2020-01-04"))
     # insFood(FoodItem('c',1,1,"2020-01-02","2020-01-02"))

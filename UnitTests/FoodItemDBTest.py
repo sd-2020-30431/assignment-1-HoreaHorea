@@ -13,11 +13,11 @@ class FoodItemDBTest(unittest.TestCase):
         b = FoodItem('badFood', 500, 333, '2020-01-03', '2020-01-01')
         c = FoodItem('newFood', 500, 333, '2020-01-02', '2020-01-02')
 
-        if v.FoodItemVerifier(a):
+        if v.foodItemVerifier(a):
             self.db.insFood(a)
-        if v.FoodItemVerifier(b):
+        if v.foodItemVerifier(b):
             self.db.insFood(b)
-        if v.FoodItemVerifier(c):
+        if v.foodItemVerifier(c):
             self.db.insFood(c)
 
     def tearDown(self):

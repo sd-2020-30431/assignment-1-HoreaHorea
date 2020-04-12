@@ -14,11 +14,11 @@ class FoodItemDBTest(unittest.TestCase):
         b = DonationPlace('Smurd', 'Tg. Mures', 'No Contact')
         c = DonationPlace('Amnesty International', 'Syria', '888-8888')
 
-        if v.DonationPlaceVerifier(a):
+        if v.donationPlaceVerifier(a):
             self.db.insDonationPlace(a)
-        if v.DonationPlaceVerifier(b):
+        if v.donationPlaceVerifier(b):
             self.db.insDonationPlace(b)
-        if v.DonationPlaceVerifier(c):
+        if v.donationPlaceVerifier(c):
             self.db.insDonationPlace(c)
 
     def tearDown(self):
